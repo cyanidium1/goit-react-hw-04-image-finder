@@ -1,43 +1,42 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-class Searchbar extends Component {
-  state = {
-    searchName: '',
+const Searchbar = ({ getName }) => {
+  const [searchName, setSearchName] = useState('');
+
+  const handleNameChange = event => {
+    setSearchName(event.currentTarget.value.toLowerCase());
   };
-  handleNameChange = event => {
-    this.setState({ searchName: event.currentTarget.value.toLowerCase() });
-  };
-  handleSubmit = event => {
+
+  const handleSubmit = event => {
     event.preventDefault();
 
-    if (this.state.searchName.trim() === '') {
+    if (searchName.trim() === '') {
       alert('Type smth then search');
       return;
     }
-    this.props.getName(this.state.searchName);
-    this.setState({ searchName: '' });
+    getName(searchName);
+    setSearchName('');
   };
-  render() {
-    return (
-      <div className="Searchbar">
-        <form className="SearchForm" onSubmit={this.handleSubmit}>
-          <input
-            className="SearchForm-input"
-            type="text"
-            name="searchName"
-            value={this.state.searchName}
-            onChange={this.handleNameChange}
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-          <button className="SearchForm-button" type="submit">
-            Search
-          </button>
-        </form>
-      </div>
-    );
-  }
-}
+
+  return (
+    <div className="Searchbar">
+      <form className="SearchForm" onSubmit={handleSubmit}>
+        <input
+          className="SearchForm-input"
+          type="text"
+          name="searchName"
+          value={searchName}
+          onChange={handleNameChange}
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+        />
+        <button className="SearchForm-button" type="submit">
+          Search
+        </button>
+      </form>
+    </div>
+  );
+};
 
 export default Searchbar;
