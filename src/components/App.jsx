@@ -18,10 +18,6 @@ const App = () => {
   const [page, setpage] = useState(1);
   const [showBtn, setshowBtn] = useState(false);
   //а вот і костилі під'їхали)
-  const [firstRender, rendered] = useState(false);
-  useEffect(() => {
-    rendered(true);
-  }, []);
 
   const setValue = searchName => {
     setsearch(searchName);
@@ -38,18 +34,20 @@ const App = () => {
     setmodal(false);
   };
 
-  const loadMore = () => {
-    setpage(page + 1);
+  const loadMore = prevState => {
+    setpage(prevState + 1);
   };
 
   useEffect(() => {
-    if (firstRender) {
+    if (search) {
       setshowBtn(false);
       setloading(true);
       getter(search, page)
         .then(response => {
           if (response.data.hits.length > 0) {
-            setPictures([...(pictures ? pictures : []), ...response.data.hits]);
+            setPictures(prevState => {
+              return [...prevState, ...response.data.hits];
+            });
             setshowBtn(response.data.hits.length / 12 === 1);
           }
         })
