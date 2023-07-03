@@ -4,7 +4,10 @@ import React from 'react';
 const Modal = ({ closeModal, full }) => {
   useEffect(() => {
     window.addEventListener('keydown', closeOnEscape);
-  }, []);
+    return () => {
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [closeModal]);
 
   const closeOnEscape = e => {
     if (e.key === 'Escape') {
@@ -17,12 +20,6 @@ const Modal = ({ closeModal, full }) => {
       closeModal();
     }
   };
-
-  useEffect(() => {
-    return () => {
-      window.removeEventListener('keydown', closeOnEscape);
-    };
-  }, []);
 
   return (
     <div className="Overlay" onClick={e => closeOnClick(e)}>

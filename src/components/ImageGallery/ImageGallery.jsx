@@ -4,7 +4,6 @@ import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 const ImageGallery = ({ pictures, toggleModal }) => {
   return (
     <>
-      {!pictures && <p>No data</p>}
       <ul className="ImageGallery">
         {pictures &&
           pictures.map(el => (

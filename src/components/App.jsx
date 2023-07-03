@@ -34,8 +34,8 @@ const App = () => {
     setmodal(false);
   };
 
-  const loadMore = prevState => {
-    setpage(prevState + 1);
+  const loadMore = () => {
+    setpage(prevState => prevState + 1);
   };
 
   useEffect(() => {
@@ -59,6 +59,7 @@ const App = () => {
   return (
     <>
       <Searchbar getName={setValue} />
+      {!pictures && <p>No data</p>}
       <ImageGallery pictures={pictures} toggleModal={toggleModal} />
       {loading && <Loader />}
       {showBtn && <Button click={loadMore} />}
